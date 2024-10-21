@@ -12,7 +12,8 @@ class SongController extends Controller
      */
     public function index()
     {
-        //
+        $songs = Song::all(); // Fetch all songs
+        return view('songs.index', compact('songs')); // Return the view with songs
     }
 
     /**
@@ -36,7 +37,7 @@ class SongController extends Controller
      */
     public function show(Song $song)
     {
-        //
+        return view('songs.show')->with('song', $song);
     }
 
     /**
