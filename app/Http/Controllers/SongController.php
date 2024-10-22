@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SongController extends Controller
 {
@@ -21,7 +22,7 @@ class SongController extends Controller
      */
     public function create()
     {
-        //
+        return view('songs.create');
     }
 
     /**
@@ -29,7 +30,33 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate input
+        $request->validate([
+            'title' => 'required',
+            'genre' => 'required',
+            'album' => 'required',
+            'release_date' => 'required|date',
+            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Check if image is uploaded and handle it
+        if ($request->hasFile('cover_image')) {
+            $imageName = time().'.'.$request->cover_image->extension();
+            // $request->image-.move(public_path('images/songs'), $imageName);
+        }
+        // Create a song record in the database
+        Song::create([
+            'title' => $request->title,
+            'genre' => $request->genre,
+            'album' => $request->album,
+            'release_date' => $request->release_date,
+            'cover_image' => $imageName,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        // Redirect to the index page with a success message
+        return to_route('songs.index')->with('success', 'Song added successfully!');
     }
 
     /**
