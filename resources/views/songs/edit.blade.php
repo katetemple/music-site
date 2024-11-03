@@ -1,3 +1,25 @@
-<div>
-    <!-- Happiness is not something readymade. It comes from your own actions. - Dalai Lama -->
-</div>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit')}}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="font-semibold text-lg mb-4">Edit Song:</h3>
+
+                    <!-- Using the SongForm component for song creation -->
+                    <!-- Pass the song data to the songform comppnent -->
+                    <x-song-form
+                        :action="route('songs.update', $song)"
+                        :method="'PATCH'"
+                        :song="$song"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

@@ -1,4 +1,5 @@
-@props(['action', 'method'])
+<!-- Defining the song prop ensures the component receives the song data, so it will be there for the use of editing a song -->
+@props(['action', 'method', 'song' => null])
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -6,6 +7,13 @@
         @method($method)
     @endif
 
+    <!-- Cancel button -->
+    <div class="mt-4 flex space-x-2">
+        <a href="{{ route('songs.index') }}" class="text-gray-600 bg-orange-300 hover:bg-orange-700 font-bold py-2 px-4 rounded">
+            Cancel
+        </a>
+    </div>
+    
     <div class="mb-4">
         <label for="title" class="block text-sm text-gray-700">Title</label>
         <input

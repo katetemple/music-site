@@ -72,7 +72,7 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        //
+        return view('songs.edit')->with('song', $song);
     }
 
     /**
@@ -80,7 +80,23 @@ class SongController extends Controller
      */
     public function update(Request $request, Song $song)
     {
-        //
+        // Validate input
+        $validated = $request->validate([
+            'title' => 'required',
+            'genre' => 'required',
+            'album' => 'required',
+            'release_date' => 'required|date',
+            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Check if image is uploaded and handle it
+        if ($request->hasFile('cover_image')) {
+            $imageName = time().'.'.$request->cover_image->extension();
+        }
+
+        $song->update($validated);
+
+        return to_route('songs.index')->with('success', 'Song updated successfully!');
     }
 
     /**
@@ -88,6 +104,8 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
-        //
+        $song->delete();
+
+        return to_route('songs.index')->with('success', 'Song deleted successfully!');
     }
 }
