@@ -21,7 +21,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Pop Rock',
                 'album' => 'HIT ME HARD AND SOFT',
                 'release_date' => '2024-05-17',
-                'cover_image' => 'https://media.pitchfork.com/photos/6614092742a7de97785c7a48/master/w_1280%2Cc_limit/Billie-Eilish-Hit-Me-Hard-and-Soft.jpg',
+                'cover_image' => 'Billie-Eilish-Hit-Me-Hard-and-Soft.png',
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
                 ],
@@ -30,7 +30,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Indie', 
                 'album' => "For Cryin' Out Loud!", 
                 'release_date' => '2024-10-01', 
-                'cover_image' => 'https://i.scdn.co/image/ab67616d0000b2734db4ce3fe9ed73fb7bc79b4a', 
+                'cover_image' => 'Finneas-For-Cryin-Out-Loud.png', 
                 'created_at' => $currentTimestamp, 
                 'updated_at' => $currentTimestamp
                 ],
@@ -39,7 +39,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Pop', 
                 'album' => 'The Rise and Fall of a Midewest Princess', 
                 'release_date' => '2023-09-22', 
-                'cover_image' => 'https://upload.wikimedia.org/wikipedia/en/3/34/Chappell_Roan_-_The_Rise_and_Fall_of_a_Midwest_Princess.png', 
+                'cover_image' => 'Chappell_Roan-The_Rise_and_Fall_of_a_Midwest_Princess.png', 
                 'created_at' => $currentTimestamp, 
                 'updated_at' => $currentTimestamp
                 ],
@@ -48,7 +48,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Pop', 
                 'album' => 'Everything to Everyone', 
                 'release_date' => '2022-11-11', 
-                'cover_image' => 'https://i.scdn.co/image/ab67616d0000b2737251a75664414e04757eafe7', 
+                'cover_image' => 'Reneé_Rapp_Everything_To_Everyone.png', 
                 'created_at' => $currentTimestamp, 
                 'updated_at' => $currentTimestamp
                 ],
@@ -57,7 +57,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Indie', 
                 'album' => 'Submarine', 
                 'release_date' => '2022-05-31', 
-                'cover_image' => 'https://i.scdn.co/image/ab67616d0000b2734d070fdf58fad8c54c5beb85', 
+                'cover_image' => 'The_Marías_Submarine.png', 
                 'created_at' => $currentTimestamp, 
                 'updated_at' => $currentTimestamp
                 ]

@@ -72,22 +72,23 @@
 
     <div class="mb-4">
         <label for="cover_image" class="block text-sm font-medium text-gray-700">Song Cover Image</label>
+        <!-- Conditionally add required attribute for cover image -->
         <input
             type="file"
             name="cover_image"
             id="cover_image"
-            {{ isset($song) ? : 'required'}}
+            {{ !$song ? 'required' : '' }} 
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
         @error('cover_image')
             <p class="text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
 
-    @isset($song->cover_image)
+    @if(isset($song->cover_image))
         <div class="mb-4">
-            <img src="{{ asset($song->cover_image) }}" alt="Song Cover" class="w-24 h-32 object-cover">
+            <img src="{{ asset('images/songs/' . $song->cover_image) }}" alt="Song Cover" class="w-24 h-32 object-cover">
         </div>
-    @endisset
+    @endif
 
     <div>
         <x-primary-button>

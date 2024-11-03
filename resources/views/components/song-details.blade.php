@@ -7,7 +7,7 @@
     <h1 class="font-bold text-black-600 mb-2" style="font-size: 2rem;">{{ $title }}</h1><!-- Heading with larger text and colour -->
     <div class="overflow-hidden rounded-lg mb-4 flex justify-center">
         <!-- Image is further restricted to a smaller size -->
-        <img src="{{ $cover_image }}" alt="{{ $title }}" class="w-full max-w-xs h-auto object-cover"> <!-- Restrict image to max-w-xs (20 rem) and ensure responsiveness -->
+        <img src="{{ asset('images/songs/' . $cover_image) }}" alt="{{ $title }}" class="w-full max-w-xs h-auto object-cover"> <!-- Restrict image to max-w-xs (20 rem) and ensure responsiveness -->
     </div>
     <!-- Album Title -->
     <h2 class="text-gray-500 font-semibold mb-4" style="font-size:1rem;">{{ $album }}</h2>

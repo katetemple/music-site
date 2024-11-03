@@ -36,13 +36,13 @@ class SongController extends Controller
             'genre' => 'required',
             'album' => 'required',
             'release_date' => 'required|date',
-            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // image required in create form only
         ]);
 
         // Check if image is uploaded and handle it
         if ($request->hasFile('cover_image')) {
             $imageName = time().'.'.$request->cover_image->extension();
-            // $request->image-.move(public_path('images/songs'), $imageName);
+            $request->cover_image->move(public_path('images/songs'), $imageName);
         }
         // Create a song record in the database
         Song::create([
@@ -86,12 +86,13 @@ class SongController extends Controller
             'genre' => 'required',
             'album' => 'required',
             'release_date' => 'required|date',
-            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // image is optional for the sake of editing a song
         ]);
 
         // Check if image is uploaded and handle it
         if ($request->hasFile('cover_image')) {
             $imageName = time().'.'.$request->cover_image->extension();
+            $request->cover_image->move(public_path('images/songs'), $imageName);
         }
 
         $song->update($validated);
@@ -104,6 +105,15 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
+        // Retrive the cover image filename
+        $imagePath = public_path('images/songs/' . $song->cover_image);
+
+        // Check if the file exists then delete it
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        // Delete the song from the database
         $song->delete();
 
         return to_route('songs.index')->with('success', 'Song deleted successfully!');
