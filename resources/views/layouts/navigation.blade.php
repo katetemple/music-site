@@ -21,6 +21,12 @@
                     <x-nav-link :href="route('songs.create')" :active="request()->routeIs('songs.create')">
                         {{ __('Add a Song') }}
                     </x-nav-link>
+                    <form action="{{ route('songs.search') }}" class="py-4"  method="GET">
+                        <input type="text" name="query" placeholder="Search for a song...">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            Search
+                        </button>
+                    </form>
                 </div>
             </div>
 

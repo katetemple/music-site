@@ -14,6 +14,7 @@ class SongController extends Controller
     public function index()
     {
         $songs = Song::all(); // Fetch all songs
+
         return view('songs.index', compact('songs')); // Return the view with songs
     }
 
@@ -117,5 +118,18 @@ class SongController extends Controller
         $song->delete();
 
         return to_route('songs.index')->with('success', 'Song deleted successfully!');
+    }
+
+    public function search(Request $request)
+    {
+        // Retrieve the search input
+        $searchInput = $request->input('query');
+
+        $songs = Song::where('title', 'LIKE', "%$searchInput%")
+                    ->orWhere('album', 'LIKE', "%$searchInput%")
+                    ->orWhere('genre', 'LIKE', "%$searchInput%")
+                    ->get();
+
+        return view('searchResults', compact('songs', $searchInput));
     }
 }
