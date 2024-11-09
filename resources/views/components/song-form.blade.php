@@ -1,4 +1,4 @@
-<!-- Defining the song prop ensures the component receives the song data, so it will be there for the use of editing a song -->
+<!-- Define song prompt to ensure the component receives song data if editing a song -->
 @props(['action', 'method', 'song' => null])
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
@@ -6,14 +6,8 @@
     @if($method === 'PUT' || $method === 'PATCH')
         @method($method)
     @endif
-
-    <!-- Cancel button -->
-    <div class="mt-4 flex space-x-2">
-        <a href="{{ route('songs.index') }}" class="text-gray-600 bg-orange-300 hover:bg-orange-700 font-bold py-2 px-4 rounded">
-            Cancel
-        </a>
-    </div>
     
+    <!-- Title input field -->
     <div class="mb-4">
         <label for="title" class="block text-sm text-gray-700">Title</label>
         <input
@@ -28,6 +22,7 @@
         @enderror
     </div>
 
+    <!-- Genre input field -->
     <div class="mb-4">
         <label for="genre" class="block text-sm text-gray-700">Genre</label>
         <input
@@ -42,6 +37,7 @@
         @enderror
     </div>
 
+    <!-- Album input field -->
     <div class="mb-4">
         <label for="album" class="block text-sm text-gray-700">album</label>
         <input
@@ -56,6 +52,7 @@
         @enderror
     </div>
 
+    <!-- Release date input field -->
     <div class="mb-4">
         <label for="release_date" class="block text-sm text-gray-700">release_date</label>
         <input
@@ -70,9 +67,10 @@
         @enderror
     </div>
 
+    <!-- Cover image input field -->
     <div class="mb-4">
         <label for="cover_image" class="block text-sm font-medium text-gray-700">Song Cover Image</label>
-        <!-- Conditionally add required attribute for cover image -->
+        <!-- Image required only when adding a song -->
         <input
             type="file"
             name="cover_image"
@@ -84,6 +82,7 @@
         @enderror
     </div>
 
+    <!-- Display existing cover image if editing an existing song -->
     @if(isset($song->cover_image))
         <div class="mb-4">
             <img src="{{ asset('images/songs/' . $song->cover_image) }}" alt="Song Cover" class="w-24 h-32 object-cover">

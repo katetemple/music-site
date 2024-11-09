@@ -9,19 +9,24 @@ use Illuminate\Support\Facades\Storage;
 class SongController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Shows all songs, optionally filtered by a search input
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $songs = Song::all(); // Fetch all songs
+        $searchInput = $request->input('search');
+        $query = Song::query();
 
-        $songs = Song::orderBy('title', 'asc')->get(); // order songs in alphabetical order
+        if($searchInput) {
+            $query->where('title', 'LIKE', "%$searchInput%");
+        }
+
+        $songs = $query->orderBy('title', 'asc')->get(); // in alphabetical order
 
         return view('songs.index', compact('songs')); // Return the view with songs
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new song
      */
     public function create()
     {
@@ -29,7 +34,7 @@ class SongController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Validates, processes, and saves the new song data
      */
     public function store(Request $request)
     {
@@ -63,7 +68,7 @@ class SongController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Shows details of a single song
      */
     public function show(Song $song)
     {
@@ -71,7 +76,7 @@ class SongController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Displays song edit form with its current data
      */
     public function edit(Song $song)
     {
@@ -79,7 +84,7 @@ class SongController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Validates and updates song data 
      */
     public function update(Request $request, Song $song)
     {
@@ -104,7 +109,7 @@ class SongController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deletes the song data
      */
     public function destroy(Song $song)
     {
@@ -121,16 +126,5 @@ class SongController extends Controller
 
         return to_route('songs.index')->with('success', 'Song deleted successfully!');
     }
-
-    public function search(Request $request)
-    {
-        // Retrieve the search input
-        $query = $request->input('query');
-
-        $songs = Song::where('title', 'LIKE', "%$query%")->get();
-                    // ->orWhere('album', 'LIKE', "%$searchInput%")
-                    // ->orWhere('genre', 'LIKE', "%$searchInput%")
-                    
-        return view('songs.search', compact('songs', 'query'));
-    }
 }
+
