@@ -21,7 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/songs/{song}/edit', [SongController::class, 'edit'])->name('songs.edit');
     Route::patch('/songs/{song}', [SongController::class, 'update'])->name('songs.update');
     Route::delete('/songs/{song}/destroy', [SongController::class, 'destroy'])->name('songs.destroy');
-    Route::get('/search', [SongController::class, 'search'])->name('songs.search');
     Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
 
     // Profile management routes

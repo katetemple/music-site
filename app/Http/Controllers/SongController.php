@@ -17,7 +17,10 @@ class SongController extends Controller
         $query = Song::query();
 
         if($searchInput) {
-            $query->where('title', 'LIKE', "%$searchInput%");
+            $query->where('title', 'LIKE', "%$searchInput%")
+                ->orWhere('genre', 'LIKE', "%$searchInput%")
+                ->orWhere('album', 'LIKE', "%$searchInput%");
+
         }
 
         $songs = $query->orderBy('title', 'asc')->get(); // in alphabetical order
