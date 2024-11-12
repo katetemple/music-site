@@ -22,6 +22,12 @@
                         {{ __('Add a Song') }}
                     </x-nav-link>
 
+                    <!-- The create link only appears for admin users -->
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('songs.create')" :active="request()->routeIs('songs.create')">
+                            {{ __('Add a Song') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

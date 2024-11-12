@@ -21,7 +21,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Pop Rock',
                 'album' => 'HIT ME HARD AND SOFT',
                 'release_date' => '2024-05-17',
-                'cover_image' => 'Billie-Eilish-Hit-Me-Hard-and-Soft.png',
+                'cover_image' => 'Billie-Eilish-Hit-Me-Hard-and-Soft.jpg',
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
                 ],
@@ -39,7 +39,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Pop', 
                 'album' => 'The Rise and Fall of a Midewest Princess', 
                 'release_date' => '2023-09-22', 
-                'cover_image' => 'Chappell_Roan-The_Rise_and_Fall_of_a_Midwest_Princess.png', 
+                'cover_image' => 'Chappell-Roan-Princess.jpg', 
                 'created_at' => $currentTimestamp, 
                 'updated_at' => $currentTimestamp
                 ],
@@ -57,7 +57,7 @@ class SongSeeder extends Seeder
                 'genre' => 'Indie', 
                 'album' => 'Submarine', 
                 'release_date' => '2022-05-31', 
-                'cover_image' => 'The_Marías_Submarine.png', 
+                'cover_image' => 'The_Marías_-_Submarine.jpg', 
                 'created_at' => $currentTimestamp, 
                 'updated_at' => $currentTimestamp
                 ]

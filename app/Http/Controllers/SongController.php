@@ -120,9 +120,9 @@ class SongController extends Controller
         $imagePath = public_path('images/songs/' . $song->cover_image);
 
         // Check if the file exists then delete it
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
+        // if (file_exists($imagePath)) {
+        //     unlink($imagePath);
+        // }
 
         // Delete the song from the database
         $song->delete();
