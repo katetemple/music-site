@@ -59,7 +59,13 @@ class ReviewController extends Controller
      */
     public function edit(Review $review)
     {
-        //
+        // Check if user is the owner or an admin
+        if (auth()->user()->id !== $review->user_id && auth()->user()->role !== 'admin') {
+            return redirect()->route('songs.index')->with('error', 'Access denied.');
+        }
+
+        // Passing the song and the review object to the view, as they are both needed
+        return view('reviews.edit', compact('review'));
     }
 
     /**
@@ -67,14 +73,25 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review)
     {
-        //
+        // check to ensure user is authorised
+
+        // Validation code
+
+        $review->update($request->only(['rating', 'comment']));
+
+        // once its updated in the db, redirect 
+        return redirect()->route('songs.show', $review->song_id)
+                        ->with('success', 'Review updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy(Review $review, Song $song)
     {
-        //
+        $review->delete();
+
+        return redirect()->route('songs.show', $review->song_id)
+                        ->with('success', 'Song deleted successfully!');
     }
 }
