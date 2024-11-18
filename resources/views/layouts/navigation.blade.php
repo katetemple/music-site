@@ -18,9 +18,6 @@
                     <x-nav-link :href="route('songs.index')" :active="request()->routeIs('songs.index')">
                         {{ __('View All Songs') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('songs.create')" :active="request()->routeIs('songs.create')">
-                        {{ __('Add a Song') }}
-                    </x-nav-link>
 
                     <!-- The create link only appears for admin users -->
                     @if(auth()->user()->role === 'admin')

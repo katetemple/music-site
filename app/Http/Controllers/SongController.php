@@ -75,7 +75,11 @@ class SongController extends Controller
      */
     public function show(Song $song)
     {
-        return view('songs.show')->with('song', $song);
+        // Load the book with its associated reviews and the user who made each review
+        $song->load('reviews.user'); // Assuming each review has a 'user_id' for the review
+        return view('songs.show', compact('song'));
+        // Compact is shorthand for this
+        // return view('songs.show')->with('song', $song);
     }
 
     /**

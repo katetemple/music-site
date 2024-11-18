@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Song extends Model
 {
+    use HasFactory;
+    
     protected $fillable = [
         'title',
         'genre',
@@ -15,5 +17,8 @@ class Song extends Model
         'cover_image'
     ];
 
-    use HasFactory;
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
