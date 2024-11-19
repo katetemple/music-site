@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Song;
+use App\Models\Artist;
 use Carbon\Carbon;
 
 class SongSeeder extends Seeder
@@ -15,7 +16,9 @@ class SongSeeder extends Seeder
     public function run(): void
     {
         $currentTimestamp = Carbon::now();
-            Song::insert([
+
+        // Create a list of songs
+            $songs = [
                 [
                 'title' => 'LUNCH',
                 'genre' => 'Pop Rock',
@@ -61,6 +64,18 @@ class SongSeeder extends Seeder
                 'created_at' => $currentTimestamp, 
                 'updated_at' => $currentTimestamp
                 ]
-            ]);
+            ];
+
+            foreach ($songs as $songData)
+            {
+                // insert the song into the song table
+                $song = Song::create(array_merge($songData, ['created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp]));
+
+                // randomly select two artists
+                $artists = Artist::inRandomOrder()->take(2)->pluck('id');
+
+                // Attach artists to songs
+                $song->artists()->attach($artists);
+            }
     }
 }

@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ArtistController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,8 +18,9 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // Creates all Routes for Reviews
     Route::resource('reviews', ReviewController::class);
-
     Route::post('songs/{song}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    Route::resource('artists', ArtistController::class)->middleware('auth');
 
     // Song management routes (index, create, show, edit, update, delete, search)
     Route::get('/songs', [SongController::class, 'index'])->name('songs.index');

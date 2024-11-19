@@ -74,8 +74,16 @@ class ReviewController extends Controller
     public function update(Request $request, Review $review)
     {
         // check to ensure user is authorised
+        // if (auth()->user()->id !== $review->user_id && auth()->user()->role !== 'admin') {
+        //     return redirect()->route('songs.index')->with('error', 'Access denied.');
+        // }
 
         // Validation code
+        // $validated = $request->validate([
+        //     'user_id' => 'required',
+        //     'rating' => 'required',
+        //     'comment' => 'required',
+        // ]);
 
         $review->update($request->only(['rating', 'comment']));
 

@@ -17,8 +17,15 @@ class Song extends Model
         'cover_image'
     ];
 
+    // song can have many reviews
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    // Song can have many artists
+    public function artists()
+    {
+        return $this->belongsToMany(Artist::class);
     }
 }
