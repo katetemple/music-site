@@ -42,12 +42,15 @@ class SongController extends Controller
     public function store(Request $request)
     {
         // Validate input
+        // add in 
         $request->validate([
             'title' => 'required',
             'genre' => 'required',
             'album' => 'required',
             'release_date' => 'required|date',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // image required in create form only
+            // add artist validation
+            // 'artist_ids.*' => 'exists:artists,id', // Validate each artist ID exists
         ]);
 
         // Check if image is uploaded and handle it
@@ -65,6 +68,8 @@ class SongController extends Controller
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        // use attach method for artists
 
         // Redirect to the index page with a success message
         return to_route('songs.index')->with('success', 'Song added successfully!');
