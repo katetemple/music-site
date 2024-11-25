@@ -25,6 +25,11 @@
                             {{ __('Add a Song') }}
                         </x-nav-link>
                     @endif
+
+                    <!-- Artists Page -->
+                    <x-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
+                        {{ __('View All Artists') }}
+                    </x-nav-link>
                 </div>
             </div>
 

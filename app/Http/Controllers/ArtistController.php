@@ -10,9 +10,19 @@ class ArtistController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $searchInput = $request->input('search');
+        $query = Artist::query();
+
+        if($searchInput) {
+            $query->where('name', 'LIKE', "%$searchInput%");
+
+        }
+
+        $artists = $query->orderBy('name', 'asc')->get(); // in alphabetical order
+
+        return view('artists.index', compact('artists')); // Return the view with artists
     }
 
     /**

@@ -20,7 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('reviews', ReviewController::class);
     Route::post('songs/{song}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
+    // Routes for artists
     Route::resource('artists', ArtistController::class)->middleware('auth');
+    Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
+    
 
     // Song management routes (index, create, show, edit, update, delete, search)
     Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
