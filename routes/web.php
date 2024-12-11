@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     // Routes for artists
     Route::resource('artists', ArtistController::class)->middleware('auth');
     Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
-    
+    Route::get('/artists/{artist}', [ArtistController::class, 'show'])->name('artists.show');
 
     // Song management routes (index, create, show, edit, update, delete, search)
     Route::get('/songs', [SongController::class, 'index'])->name('songs.index');

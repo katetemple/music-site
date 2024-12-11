@@ -9,7 +9,11 @@ class Artist extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'bio', 'image'];
+    protected $fillable = ['name', 'bio', 'image', 'dob'];
+
+    protected $casts = [
+        'dob' => 'date',
+    ];
 
     // Artist can have many songs
     public function songs()

@@ -26,11 +26,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <div class="border p-4 rounded-lg shadow-md">
+                    <div class="border p-4 rounded-lg ">
                         <h3 class="font-semibold text-lg mb-4">List of Artists:</h3>
 
-                        <!-- Display each song in grid layout -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Display each artist in grid layout -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             @foreach($artists as $artist)
                             <div class="flex flex-col">
                                 <!-- Link to details page -->

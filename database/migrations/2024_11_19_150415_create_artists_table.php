@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('bio')->nullable(); // Description of artist
             $table->string('image')->nullable(); // Photo of Artist
+            $table->date('dob')->nullable(); // date of birth
             $table->timestamps();
         });
     }

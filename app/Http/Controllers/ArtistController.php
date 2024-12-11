@@ -42,11 +42,11 @@ class ArtistController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the artists details.
      */
     public function show(Artist $artist)
     {
-        //
+        return view('artists.show', compact('artist'));
     }
 
     /**
