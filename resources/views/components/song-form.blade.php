@@ -22,24 +22,6 @@
         @enderror
     </div>
 
-    <!-- Artist input field -->
-    <!-- Creates a multi-select dropdown that lets you select multiple artists. -->
-    <!-- keeps any previously selected artists if the form fails validation (via old()). -->
-    <div class="mb-4">
-        <label for="artists" class="block text-sm text-gray-700">Artists</label>
-        <select name="artist_ids[]" id="artists" multiple class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-            @foreach($artists as $artist)
-                <option value="{{ $artist->id }}" @if(in_array($artist->id, old('artist_ids', $song->artists->pluck('id')->toArray()))) selected @endif>
-                    {{ $artist->name }}
-                </option>
-            @endforeach
-        </select>
-        @error('artist_ids')
-            <p class="text-sm text-red-600">{{ $message }}</p>
-        @enderror
-    </div>
-
-
     <!-- Genre input field -->
     <div class="mb-4">
         <label for="genre" class="block text-sm text-gray-700">Genre</label>

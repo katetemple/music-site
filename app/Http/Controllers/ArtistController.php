@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArtistController extends Controller
 {
@@ -30,7 +31,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        //
+        return view('artists.create');
     }
 
     /**
@@ -38,7 +39,34 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate input
+        // add in 
+        $request->validate([
+            'name' => 'required',
+            'bio' => 'required',
+            'dob' => 'required|date',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // image required in create form only
+        ]);
+
+        // Check if image is uploaded and handle it
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images/artists'), $imageName);
+        }
+        // Create a artist record in the database
+        Artist::create([
+            'name' => $request->name,
+            'bio' => $request->bio,
+            'dob' => $request->dob,
+            'image' => $imageName,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        // use attach method for artists
+
+        // Redirect to the index page with a success message
+        return to_route('artists.index')->with('success', 'Artist added successfully!');
     }
 
     /**
@@ -54,7 +82,7 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        //
+        return view('artists.edit')->with('artist', $artist);
     }
 
     /**
@@ -62,7 +90,23 @@ class ArtistController extends Controller
      */
     public function update(Request $request, Artist $artist)
     {
-        //
+        // Validate input
+        $validated = $request->validate([
+            'name' => 'required',
+            'bio' => 'required',
+            'dob' => 'required|date',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // image required in create form only
+        ]);
+
+        // Check if image is uploaded and handle it
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images/artists'), $imageName);
+        }
+
+        $artist->update($validated);
+
+        return to_route('artists.index')->with('success', 'Artist updated successfully!');
     }
 
     /**

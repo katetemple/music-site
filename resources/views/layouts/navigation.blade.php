@@ -26,6 +26,13 @@
                         </x-nav-link>
                     @endif
 
+                    <!-- The create link only appears for admin users -->
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('artists.create')" :active="request()->routeIs('artists.create')">
+                            {{ __('Add an Artist') }}
+                        </x-nav-link>
+                    @endif
+
                     <!-- Artists Page -->
                     <x-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
                         {{ __('View All Artists') }}
