@@ -1,5 +1,5 @@
 <!-- Define song prompt to ensure the component receives song data if editing a song -->
-@props(['action', 'method', 'song' => null])
+@props(['action', 'method', 'artists', 'song' => null])
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -54,7 +54,7 @@
 
     <!-- Release date input field -->
     <div class="mb-4">
-        <label for="release_date" class="block text-sm text-gray-700">release_date</label>
+        <label for="release_date" class="block text-sm text-gray-700">Release Date</label>
         <input
             type="date"
             name="release_date"
@@ -66,6 +66,31 @@
             <p class="text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
+
+    <!-- Multiselect dropdown for artists -->
+    <div class="mb-4">
+        <label for="artists" class="block font-medium text-sm text-gray-700">Artists (Hold 'Ctrl' Key to select multiple artists)</label>
+        <select 
+            name="artists[]" 
+            id="artists" 
+            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+            multiple
+        >
+        @foreach ($artists as $artist)
+            <option 
+                value="{{ $artist->id }}"
+                {{ $song && $song->artists->contains($artist->id) ? 'selected' : '' }}
+                >
+                {{ $artist->name }}
+            </option>
+        @endforeach
+        </select>
+        @error('artists')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+        @enderror
+    </div>
+
+
 
     <!-- Cover image input field -->
     <div class="mb-4">

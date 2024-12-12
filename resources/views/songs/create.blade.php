@@ -16,6 +16,7 @@
                     <x-song-form
                         :action="route('songs.store')"
                         :method="'POST'"
+                        :artists="$artists"
                     />
                 </div>
             </div>

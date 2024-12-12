@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Models\Artist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +34,8 @@ class SongController extends Controller
      */
     public function create()
     {
-        return view('songs.create');
+        $artists = Artist::all(); // Get all artists to display in form
+        return view('songs.create', compact('artists'));
     }
 
     /**
@@ -42,15 +44,13 @@ class SongController extends Controller
     public function store(Request $request)
     {
         // Validate input
-        // add in 
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required',
             'genre' => 'required',
             'album' => 'required',
             'release_date' => 'required|date',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // image required in create form only
-            // add artist validation
-            // 'artist_ids.*' => 'exists:artists,id', // Validate each artist ID exists
+            'artists' => 'array|exists:artists,id'
         ]);
 
         // Check if image is uploaded and handle it
@@ -58,18 +58,23 @@ class SongController extends Controller
             $imageName = time().'.'.$request->cover_image->extension();
             $request->cover_image->move(public_path('images/songs'), $imageName);
         }
+
         // Create a song record in the database
-        Song::create([
-            'title' => $request->title,
-            'genre' => $request->genre,
-            'album' => $request->album,
-            'release_date' => $request->release_date,
+       // Create a song record in the database
+        $song = Song::create([
+            'title' => $validated['title'],
+            'genre' => $validated['genre'],
+            'album' => $validated['album'],
+            'release_date' => $validated['release_date'],
             'cover_image' => $imageName,
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
         // use attach method for artists
+        if (isset($validated['artists'])) {
+            $song->artists()->attach($validated['artists']);
+        }
 
         // Redirect to the index page with a success message
         return to_route('songs.index')->with('success', 'Song added successfully!');
@@ -81,10 +86,9 @@ class SongController extends Controller
     public function show(Song $song)
     {
         // Load the book with its associated reviews and the user who made each review
-        $song->load('reviews.user'); // Assuming each review has a 'user_id' for the review
+        $song->load(['reviews.user', 'artists']); // Assuming each review has a 'user_id' for the review
+        // Compact is shorthand for this return view('songs.show')->with('song', $song);
         return view('songs.show', compact('song'));
-        // Compact is shorthand for this
-        // return view('songs.show')->with('song', $song);
     }
 
     /**
@@ -92,7 +96,8 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        return view('songs.edit')->with('song', $song);
+        $artists = Artist::all(); // Get all artists
+        return view('songs.edit', compact('song', 'artists'));
     }
 
     /**
@@ -125,14 +130,6 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
-        // Retrive the cover image filename
-        $imagePath = public_path('images/songs/' . $song->cover_image);
-
-        // Check if the file exists then delete it
-        // if (file_exists($imagePath)) {
-        //     unlink($imagePath);
-        // }
-
         // Delete the song from the database
         $song->delete();
 

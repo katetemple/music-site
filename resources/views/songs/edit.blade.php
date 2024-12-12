@@ -23,6 +23,7 @@
                         :action="route('songs.update', $song)"
                         :method="'PATCH'"
                         :song="$song"
+                        :artists="$artists"
                     />
                 </div>
             </div>

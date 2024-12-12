@@ -44,7 +44,7 @@
             type="date"
             name="dob"
             id="dob"
-            value="{{ old('dob', $artist->dob ?? '')}}"
+            value="{{ old('dob', $artist ? $artist->dob->format('Y-m-d') : '') }}"
             required
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
         @error('dob')
@@ -60,7 +60,7 @@
             type="file"
             name="image"
             id="image"
-            {{ !$artist ? 'required' : '' }} 
+            @if(!isset($artist)) required @endif
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
         @error('image')
             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -68,7 +68,7 @@
     </div>
 
     <!-- Display existing image if editing an existing artist -->
-    @if(isset($artist->image))
+    @if(optional($artist)->image)
         <div class="mb-4">
             <img src="{{ asset('images/artists/' . $artist->image) }}" alt="Artist Image" class="w-24 h-32 object-cover">
         </div>

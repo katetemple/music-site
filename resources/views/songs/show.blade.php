@@ -14,12 +14,14 @@
             <div class="bg-white overflow-hidden shadow-sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">Song Details</h3>
+                    <!-- Pass artists to the component -->
                     <x-song-details 
                         :title="$song->title"
                         :genre="$song->genre"
                         :album="$song->album"
                         :release_date="$song->release_date"
                         :cover_image="$song->cover_image"
+                        :artists="$song->artists" 
                     />   
 
                     <!-- Song Reviews -->

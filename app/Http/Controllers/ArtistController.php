@@ -41,7 +41,7 @@ class ArtistController extends Controller
     {
         // Validate input
         // add in 
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required',
             'bio' => 'required',
             'dob' => 'required|date',
@@ -52,18 +52,19 @@ class ArtistController extends Controller
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('images/artists'), $imageName);
+            $validated['image'] = $imageName;
         }
+
         // Create a artist record in the database
         Artist::create([
-            'name' => $request->name,
-            'bio' => $request->bio,
-            'dob' => $request->dob,
+            'name' => $validated['name'],
+            'bio' => $validated['bio'],
+            'dob' => $validated['dob'],
             'image' => $imageName,
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
-        // use attach method for artists
 
         // Redirect to the index page with a success message
         return to_route('artists.index')->with('success', 'Artist added successfully!');
@@ -95,13 +96,14 @@ class ArtistController extends Controller
             'name' => 'required',
             'bio' => 'required',
             'dob' => 'required|date',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // image required in create form only
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // image required in create form only
         ]);
 
         // Check if image is uploaded and handle it
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('images/artists'), $imageName);
+            $validated['image'] = $imageName;
         }
 
         $artist->update($validated);
@@ -114,6 +116,9 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        //
+        // Delete the song from the database
+        $artist->delete();
+
+        return to_route('artists.index')->with('success', 'Artist deleted successfully!');
     }
 }
